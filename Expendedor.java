@@ -1,18 +1,39 @@
+/**
+ * Clase que entrega los productos y el vuelto al comprador
+ * */
 class Expendedor{
+    /** Parametro para sacar el vuelto del deposito de vuelto */
     private DepositoVuelto dv;
-    private Deposito cocacola;
-    private Deposito sprite;
-    private Deposito snickers;
-    private Deposito super8;
-    
-    public int precioProducto;
-    public static final int  COCA=1;
-    public static final int  SPRITE=2;
-    public static final int  SNICKERS=3;
-    public static final int  SUPER8=4;
-    
 
-    
+    /** Parametro para sacar una bebida del deposito */
+    private Deposito cocacola;
+
+    /** Parametro para sacar una bebida del deposito */
+    private Deposito sprite;
+
+    /** Parametro para sacar un dulce del deposito */
+    private Deposito snickers;
+
+    /** Parametro para sacar un dulce del deposito */
+    private Deposito super8;
+
+    /** int del precio del producto */
+    public int precioProducto;
+
+    /** (opcional)Parametro para que el comprador pueda usar con Expendedor.COCA */
+    public static final int  COCA=1;
+
+    /** (opcional)Parametro para que el comprador pueda usar con Expendedor.SPRITE */
+    public static final int  SPRITE=2;
+
+    /** (opcional)Parametro para que el comprador pueda usar con Expendedor.SNICKERS*/
+    public static final int  SNICKERS=3;
+
+    /** (opcional)Parametro para que el comprador pueda usar con Expendedor.SUPER8 */
+    public static final int  SUPER8=4;
+
+
+    /** Constructor, crea productos y los envia al deposito */
     public Expendedor(int numProducto,int precioProducto){
         
         this.precioProducto=precioProducto;
@@ -29,9 +50,15 @@ class Expendedor{
             super8.addProducto(new Super8(400 +i));           
         }
     }
-    
-    
-    
+
+
+    /** Inicializa variables, comprueba la validez de la solicitud del comprador y saca productos y dinero de los depositos
+     * @param m maneja las monedas (Moneda)
+     * @param sabor maneja el tipo de producto (int)
+     * @throws  NullPointerException  puede lanzar esta excepción si la moneda es null
+     * @throws  NoHayProductoException  excepcion personalizada, puede lanzar si la seleccion de productos es invalida o no quedan productos
+     * @throws  PagoInsuficienteException  excepcion personalizada, puede lanzar si no alcanza el dinero para comprar
+     */
     public Producto comprarProducto(Moneda m, int sabor)throws NullPointerException, NoHayProductoException, PagoInsuficienteException{
         if (m == null) throw new PagoIncorrectoException("moneda es null");
 
@@ -118,7 +145,10 @@ class Expendedor{
         }
         
     }
-    
+
+    /** Saca monedas del deposito de vuelto
+     * @return retorna monedas del deposito de vuelto
+     * */
     public Moneda getVuelto(){
         return (Moneda) dv.getMoneda();
     }

@@ -3,7 +3,7 @@ class Comprador{
     private int vuelto;
     private Expendedor exp;
     
-    public Comprador(Moneda m, int cual, Expendedor exp){
+    public Comprador(Moneda m, int cual, Expendedor exp) throws NoHayProductoException, PagoInsuficienteException{
           this.exp=exp;
           
           if (exp.comprarProducto(m, cual) != null) {

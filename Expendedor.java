@@ -32,39 +32,72 @@ class Expendedor{
     
     
     
-    public Producto comprarProducto(Moneda m, int sabor){
-        if(m==null)return null;
+    public Producto comprarProducto(Moneda m, int sabor)throws NullPointerException, NoHayProductoException, PagoInsuficienteException{
+        if (m == null) throw new PagoIncorrectoException("moneda es null");
+
         int vuelto = m.getValor();
         Bebida cocaColaBebida = null;
         Bebida spriteBebida = null;
         Dulce snickersDulce = null;
         Dulce super8Dulce = null;
-        
-               
+
+
         if (sabor == 1 && m.getValor() >= precioProducto) {
             cocaColaBebida = (Bebida) cocacola.getProducto();
             if (cocaColaBebida != null) {
                 vuelto = m.getValor() - precioProducto;
             }
+            else if(cocaColaBebida == null){
+                throw new NoHayProductoException("No quedan bebidas");
+            }
         }
-        if (sabor == 2 && m.getValor() >= precioProducto) {  
+        else if(sabor == 1 && m.getValor() < precioProducto){
+            throw new PagoInsuficienteException("Pago Insuficiente");
+        }
+
+        if (sabor == 2 && m.getValor() >= precioProducto) {
             spriteBebida = (Bebida) sprite.getProducto();
             if (spriteBebida != null) {
                 vuelto = m.getValor() - precioProducto;
             }
+            else if(cocaColaBebida == null){
+                throw new NoHayProductoException("No quedan bebidas");
+            }
         }
-        if (sabor == 3 && m.getValor() >= precioProducto) {  
+        else if(sabor == 2 && m.getValor() < precioProducto){
+            throw new PagoInsuficienteException("Pago Insuficiente");
+        }
+
+        if (sabor == 3 && m.getValor() >= precioProducto) {
             snickersDulce = (Dulce) snickers.getProducto();
             if (snickersDulce != null) {
                 vuelto = m.getValor() - precioProducto;
             }
+            else if(cocaColaBebida == null){
+                throw new NoHayProductoException("No quedan dulces");
+            }
         }
-        if (sabor == 4 && m.getValor() >= precioProducto) {  
+        else if(sabor == 3 && m.getValor() < precioProducto){
+            throw new PagoInsuficienteException("Pago Insuficiente");
+        }
+
+        if (sabor == 4 && m.getValor() >= precioProducto) {
             super8Dulce = (Dulce) super8.getProducto();
             if (super8Dulce != null) {
                 vuelto = m.getValor() - precioProducto;
             }
+            else if(cocaColaBebida == null){
+                throw new NoHayProductoException("No quedan dulces");
+            }
         }
+        else if(sabor == 4 && m.getValor() < precioProducto){
+            throw new PagoInsuficienteException("Pago Insuficiente");
+        }
+
+        if (sabor < 1 || sabor > 4) {
+            throw new NoHayProductoException("Producto Invalido");
+        }
+
         
         while (vuelto > 0) {
             dv.addMoneda(new Moneda100());
